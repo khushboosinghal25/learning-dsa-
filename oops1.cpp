@@ -1,16 +1,31 @@
-#include<iostream>
-#include"hero.cpp"
+#include <iostream>
 using namespace std;
-// class Hero
-// {
-//     char name[100];
-//     int health;
-//     char level;
-// };
+class Human
+{
+public:
+    int height, weight, age;
+    int getAge()
+    {
+        return this->age;
+    }
+    int setWeight(int w)
+    {
+        this->weight = w;
+    }
+};
+class male : public Human{
+    public:
+    string color;
+    void sleep(){
+        cout<<"Male sleeping "<<endl;
+    }
+};
 int main()
 {
-    //creation of object
-    Hero h1;
-    cout<<"size : "<<sizeof(h1)<<endl;
+    Human h1;
+    cout << "size : " << sizeof(h1) << endl;
+    cout << h1.getAge();
+    male m1;
+    cout<<m1.age<<endl;
     return 0;
 }
