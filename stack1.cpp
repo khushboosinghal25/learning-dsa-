@@ -4,55 +4,38 @@ using namespace std;
 class Stack
 {
 public:
+    int size;
     int *arr;
     int top;
-    int size;
     Stack(int size)
     {
         this->size = size;
-        arr = new int(size);
-        top = -1;
+        this->arr = new int[size];
+        this->top = -1;
     }
-    void push(int element)
-    {
-        if (size - top >1)
+    void push(int element){
+        if(top==size-1)
         {
-            top++;
-            arr[top] = element;
+            cout<<"Overflow"<<endl;
+            return;
         }
-        else
-        {
-            cout << "stack overflow" << endl;
-        }
+        arr[++top]=element;
+        
     }
-    void pop()
-    {
-        if (top >= 0)
-        {
-            top--;
-        }
-        else
-        {
-            cout << "stack underflow" << endl;
-        }
-    }
-    int peek()
-    {
-        if(top>=0&& top<size)
-        return arr[top];
-        else
-        {
-            cout<<"stack empty"<<endl;
-        }
-    }
-    bool isEmpty()
-    {
+    void pop(){
         if(top==-1)
-            return true;
-        else
-            return false;
+          {  cout<<"Underflow"<<endl;
+            return;}
+        top--;
     }
-    
+    int peek(){
+        if(top==-1)
+        {  cout<<"Stack is empty"<<endl;}
+        return arr[top];
+    }
+    bool isEmpty(){
+        return top==-1;
+    }
 };
 int main()
 { /*stack<int> st;
@@ -92,6 +75,6 @@ int main()
     st.pop();
     st.pop();
     st.pop();
-    // cout<<st.pop()<<endl;
+    // cout<<st.pop( )<<endl;
     return 0;
 }

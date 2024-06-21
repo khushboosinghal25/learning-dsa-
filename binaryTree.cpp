@@ -1,42 +1,44 @@
-#include <iostream>
-#include <ostream>
+#include <bits/stdc++.h>
 using namespace std;
-#include <queue>
-class node
+
+class Node
 {
 public:
     int data;
-    node *left;
-    node *right;
-    node(int d)
+    Node *left;
+    Node *right;
+    Node(int val)
     {
-        this->data = d;
+        data = val;
         this->left = NULL;
         this->right = NULL;
     }
 };
-node *buildTree(node *root)
+Node *buildTree(Node *root)
 {
-    cout << "Enter the data : " << endl;
+    cout << "Enter the data " << endl;
     int data;
     cin >> data;
-    root = new node(data);
+    root = new Node(data);
     if (data == -1)
+    {
         return NULL;
-    cout << "Enter the data for inserting in left " << data << endl;
+    }
+    cout << "Enter data for inserting in left " << data << endl;
     root->left = buildTree(root->left);
-    cout << "Enter the data for inserting in right" << data << endl;
+    cout << "Enter data for inserting in right " << data << endl;
     root->right = buildTree(root->right);
     return root;
 }
-void levelOrderTraversal(node *root)
+
+void levelOrderTraversal(Node *root)
 {
-    queue<node *> q;
+    queue<Node *> q;
     q.push(root);
     q.push(NULL);
     while (!q.empty())
     {
-        node *temp = q.front();
+        Node *temp = q.front();
         q.pop();
         if (temp == NULL)
         {
@@ -50,75 +52,93 @@ void levelOrderTraversal(node *root)
         {
             cout << temp->data << " ";
             if (temp->left)
-            {
                 q.push(temp->left);
-            }
             if (temp->right)
-            {
                 q.push(temp->right);
-            }
         }
     }
 }
-void inorder(node *root)
+vector<int> reverseLevelOrderTraversal(Node *root)
 {
-    if (root == NULL)
-        return;
-    inorder(root->left);
-    cout << root->data << " ";
-    inorder(root->right);
+    vector<int> ans;
+    queue<Node *> q;
+    q.push(root);
+    q.push(NULL);
+    while (!q.empty())
+    {
+        Node *temp = q.front();
+        q.pop();
+        if (temp == NULL)
+        {
+            cout << endl;
+            if (!q.empty())
+            {
+                q.push(NULL);
+            }
+        }
+        else
+        {
+            ans.push_back(temp->data);
+            if (temp->right)
+                q.push(temp->right);
+            if (temp->left)
+                q.push(temp->left);
+        }
+    }
+    reverse(ans.begin(), ans.end());
+    return ans;
 }
-void preOrder(node *root)
+void preOrder(Node *root)
 {
-    if (root == NULL)
+    if (!root)
         return;
     cout << root->data << " ";
     preOrder(root->left);
     preOrder(root->right);
 }
-void postOrder(node *root)
+void inorder(Node *root)
 {
-    if (root == NULL)
+    if (!root)
         return;
-    postOrder(root->left);
-    postOrder(root->right);
+    inorder(root->left);
     cout << root->data << " ";
+    inorder(root->right);
 }
-node *buildFromLevelOrder(node *&root)
+
+Node *buildFromLevelOrder(Node *root)
 {
-    queue<node *> q;
-    cout << "enter the data" << endl;
-    int data;
-    cin >> data;
-    root = new node(data);
+    queue<Node *> q;
+    root = new Node(1);
     q.push(root);
+    int i = 2;
     while (!q.empty())
     {
-        node *temp = q.front();
+        Node *temp = q.front();
         q.pop();
-        cout << "enter left node for " << temp->data << endl;
-        int leftData;
-        cin >> leftData;
-        if (leftData != -1)
+        if (i <= 10)
         {
-            temp->left = new node(leftData);
+            temp->left = new Node(i);
             q.push(temp->left);
-        }
-        cout << "enter right node for " << temp->data << endl;
-        int rightData;
-        cin >> rightData;
-        if (rightData != -1)
-        {
-            temp->right = new node(rightData);
-            q.push(temp->right);
+            i++;
+            if (i <= 10)
+            {
+                temp->right = new Node(i);
+                q.push(temp->right);
+                i++;
+            }
         }
     }
-}
-int main()
-{
-    node *root = NULL;
-    root = buildTree(root);
-    // 1 3 7 -1 -1 11 -1 -1 5 17 -1 -1 -1
-    // level order
-    levelOrderTraversal(root);
-}
+    int main()
+    {
+        Node *root = new Node(10);
+        root = buildTree(root);
+        cout << "Level order traversal of binary tree is \n";
+        levelOrderTraversal(root);
+        cout << "Reverse level order traversal of binary tree is \n";
+        vector<int> ans = reverseLevelOrderTraversal(root);
+        for (int i = 0; i < ans.size(); i++)
+        {
+            cout << ans[i] << " ";
+        }
+        return 0;
+    }

@@ -67,13 +67,18 @@ void levelOrderTraversal(Node *&root)
         }
     }
 }
+Node* minVal(Node* root){
+    Node* temp = root;
+    while(temp->left)temp = temp->left;
+    return temp;
+}
 Node *deleteFromBST(Node *&root, int val)
 {
     if (root == NULL)
         return root;
     if (root->data == val)
     {
-        // o child
+        // 0 child
         if (root->left == NULL && root->right == NULL)
         {
             delete root;
@@ -97,7 +102,7 @@ Node *deleteFromBST(Node *&root, int val)
         if (root->left != NULL && root->right != NULL)
         {
             int mini = minVal(root->right)->data;
-            root->data = mini;
+            root->data = mini; 
             root->right = deleteFromBST(root->right,mini);
             return root;
         }
