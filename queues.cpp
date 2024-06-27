@@ -70,7 +70,7 @@ public:
     bool enqueue(int value)
     {
         if ((front == 0 && rear == size - 1) || (rear == (front - 1) % (size - 1)))
-        {
+        { 
             cout << "Queue is full ";
             return false;
         }
@@ -101,7 +101,7 @@ public:
         }
         int ans = arr[front];
         arr[front] = -1;
-        if(front==rear) // single em=lement
+        if(front==rear) // single element
         {
             front =rear=-1;
         }
